@@ -1,110 +1,70 @@
 ﻿using System;
+using SFML.Graphics;
+using SFML.Window;
+using SFML.System;
 
-namespace GameOfLife
-{
-    class Program
+namespace GameOfLifeSFML
+{    
+    public class Program
     {
         static void Main(string[] args)
         {
-            // Parse the command-line arguments
-            int width = 30;
-            int height = 30;
-            if (args.Length >= 2)
-            {
-                int.TryParse(args[0], out width);
-                int.TryParse(args[1], out height);
-            }
+            // Create a new SFML window
+            var mode = new VideoMode(800, 800);
+            var window = new RenderWindow(mode, "Game of Life");
 
-            // Initialize the grid with a "walker" pattern
-            //bool[,] grid = new bool[width, height];
-            //for (int x = width / 2 - 2; x <= width / 2 + 2; x++)
-            //{
-            //    grid[x, height / 2] = true;
-            //}
-	    
-	    // Initialize the grid with a glider pattern
-bool[,] grid = new bool[width, height];
-grid[width / 2, height / 2] = true;
-grid[width / 2 + 1, height / 2 + 1] = true;
-grid[width / 2 + 2, height / 2 - 1] = true;
-grid[width / 2 + 2, height / 2] = true;
-grid[width / 2 + 2, height / 2 + 1] = true;
+            // Handle the close events
+            window.Closed += (s, e) => window.Close();
+
+            // Initialize the game
+            var game = new GameOfLife(30, 30);
+
+            // The size of each cell in pixels
+            var cellSize = new Vector2f(mode.Width / game.Width, mode.Height / game.Height);
+
+            // Create a clock for controlling the frame rate
+            var clock = new Clock();
+            var timePerFrame = Time.FromSeconds(0.5f); // Here you can adjust the speed of the game
 
             // Run the game loop
-            while (true)
-            {Console.CursorVisible = false;
-                Console.Clear();
-		    // Print the current state of the grid
-                for (int y = 0; y < grid.GetLength(1); y++)
-                {
-                    for (int x = 0; x < grid.GetLength(0); x++)
-                    {
-                        Console.Write(grid[x, y] ? "O" : " ");
-                    }
-                    Console.WriteLine();
-                }
+            while (window.IsOpen)
+            {
+                // Handle events
+                window.DispatchEvents();
 
-                // Update the state of the grid
-                bool[,] newGrid = new bool[grid.GetLength(0), grid.GetLength(1)];
-                for (int y = 0; y < grid.GetLength(1); y++)
+                // Only update the game every timePerFrame seconds
+                if (clock.ElapsedTime >= timePerFrame)
                 {
-                    for (int x = 0; x < grid.GetLength(0); x++)
-                    {
-                        int livingNeighbors = GetLivingNeighbors(grid, x, y);
+                    // Reset the clock
+                    clock.Restart();
 
-                        // Apply the rules of the Game of Life
-                        if (grid[x, y])
+                    // Update the game
+                    game.Update();
+
+                    // Clear the window
+                    window.Clear();
+
+                    // Draw the current state of the grid
+                    for (int y = 0; y < game.Height; y++)
+                    {
+                        for (int x = 0; x < game.Width; x++)
                         {
-                            // Any live cell with two or three live neighbors lives on to the next generation
-                            if (livingNeighbors == 2 || livingNeighbors == 3)
+                            if (game.Grid[x, y])
                             {
-                                newGrid[x, y] = true;
-                            }
-                        }
-                        else
-                        {
-                            // Any dead cell with exactly three live neighbors becomes a live cell
-                            if (livingNeighbors == 3)
-                            {
-                                newGrid[x, y] = true;
+                                var rectangle = new RectangleShape(cellSize)
+                                {
+                                    FillColor = Color.White,
+                                    Position = new Vector2f(x * cellSize.X, y * cellSize.Y)
+                                };
+                                window.Draw(rectangle);
                             }
                         }
                     }
+
+                    // Display the window
+                    window.Display();
                 }
-
-                // Replace the old grid with the new grid
-                grid = newGrid;
-
-                // Wait for a short period of time before updating the grid again
-                System.Threading.Thread.Sleep(500);
             }
         }
-
-        // Returns the number of living neighbors for the cell at the specified position
-    	// Returns the number of living neighbors for the cell at the specified position, with the edges of the grid wrapping around
-static int GetLivingNeighbors(bool[,] grid, int x, int y)
-{
-    int livingNeighbors = 0;
-    for (int dy = -1; dy <= 1; dy++)
-    {
-        for (int dx = -1; dx <= 1; dx++)
-        {
-            if (dx == 0 && dy == 0)
-            {
-                continue;
-            }
-
-            int nx = (x + dx + grid.GetLength(0)) % grid.GetLength(0);
-            int ny = (y + dy + grid.GetLength(1)) % grid.GetLength(1);
-            if (grid[nx, ny])
-            {
-                livingNeighbors++;
-            }
-        }
-    }
-    return livingNeighbors;
-}
-
-
     }
 }
