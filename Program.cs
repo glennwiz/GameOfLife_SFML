@@ -31,7 +31,7 @@ public class Program
         };
 
         // Initialize the game
-        var game = new GameOfLife(30, 30);
+        var game = new GameOfLife(200, 200);
         cellSize = new Vector2f(mode.Width / game.Width, mode.Height / game.Height);
 
         // Create a clock for controlling the frame rate
