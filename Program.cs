@@ -31,7 +31,8 @@ public class Program
         };
 
         // Initialize the game
-        var game = new GameOfLife(200, 200);
+        var game = new GameOfLife(100, 100);
+        Console.WriteLine($"game.Width: {game.Width}, game.Height: {game.Height}, width: {mode.Width }, height: {mode.Height}");
         cellSize = new Vector2f(mode.Width / game.Width, mode.Height / game.Height);
 
         // Create a clock for controlling the frame rate
@@ -60,11 +61,16 @@ public class Program
                 {
                     for (int x = 0; x < game.Width; x++)
                     {
-                        if (game.Grid[x, y])
+                        var cell = game.Grid[x, y];
+                        if (cell.IsAlive)
                         {
+                            // Calculate a color based on the cell's age
+                            var ageFactor = Math.Min(cell.Age / 3f, 1f); // Change the denominator to adjust the speed of color transition
+                            var color = new Color((byte)(255 * ageFactor), 255, (byte)(255 * (1 - ageFactor)));
+
                             var rectangle = new RectangleShape(cellSize)
                             {
-                                FillColor = Color.White,
+                                FillColor = color,
                                 Position = new Vector2f(x * cellSize.X, y * cellSize.Y)
                             };
                             window.Draw(rectangle);
