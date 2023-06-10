@@ -18,13 +18,25 @@ public class GameOfLife
             }
         }
         
-        // Initialize a glider pattern
-        Grid[width / 2, height / 2] = new Cell { IsAlive = true, Age = 0 };
-        Grid[width / 2 + 1, height / 2 + 1] = new Cell { IsAlive = true, Age = 0 };
-        Grid[width / 2 + 2, height / 2 - 1] = new Cell { IsAlive = true, Age = 0 };
-        Grid[width / 2 + 2, height / 2] = new Cell { IsAlive = true, Age = 0 };
-        Grid[width / 2 + 2, height / 2 + 1] = new Cell { IsAlive = true, Age = 0 };
+        bool[,] gliderPattern = new bool[,]
+        {
+            { false, true, false },
+            { false, false, true },
+            { true, true, true }
+        };
+        InitializePattern(gliderPattern, width / 2 - 1, height / 2 - 1);
     }
+
+    public void InitializePattern(bool[,] pattern, int offsetX, int offsetY)
+    {
+        for (int x = 0; x < pattern.GetLength(0); x++)
+        {
+            for (int y = 0; y < pattern.GetLength(1); y++)
+            {
+                Grid[x + offsetX, y + offsetY] = new Cell { IsAlive = pattern[x, y], Age = 0 };
+            }
+        }
+    }   
 
     public void Update()
     {
