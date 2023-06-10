@@ -48,6 +48,30 @@ public class Program
         {
             // Handle events
             window.DispatchEvents();
+            var random = new Random();
+             // Check for space key press
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Space))
+            {
+                // Select a random pattern
+                int randomPatternIndex = random.Next(0, patterns.Patterns.Count);
+                Console.WriteLine($"Selected random pattern index: {randomPatternIndex}");
+
+                var pattern = patterns.Patterns[randomPatternIndex];
+                Console.WriteLine($"Selected pattern: {pattern.Name}");
+
+                // Calculate maximum possible X and Y coordinates
+                int maxX = game.Width - pattern.Pattern.GetLength(1) + 1;
+                int maxY = game.Height - pattern.Pattern.GetLength(0) + 1;
+                Console.WriteLine($"Max possible X: {maxX}, Max possible Y: {maxY}");
+
+                // Select a random position (make sure it's within the grid's boundaries)
+                int x = random.Next(maxX);
+                int y = random.Next(maxY);
+                Console.WriteLine($"Selected random X: {x}, Y: {y}");
+
+                game.InitializePattern(pattern.Pattern, x, y);
+            }
+
 
             // Only update the game every timePerFrame seconds
             if (clock.ElapsedTime >= timePerFrame)
@@ -70,8 +94,12 @@ public class Program
                         if (cell.IsAlive)
                         {
                             // Calculate a color based on the cell's age
-                            var ageFactor = Math.Min(cell.Age / 3f, 1f); // Change the denominator to adjust the speed of color transition
-                            var color = new Color((byte)(255 * ageFactor), 255, (byte)(255 * (1 - ageFactor)));
+                            var ageFactor = Math.Min(cell.Age / 30f, 1f); // Change the denominator to adjust the speed of color transition
+                            var color = new Color(
+                                (byte)(255 * ageFactor), 
+                                (byte)(255 * (1 - ageFactor * 0.5)), 
+                                (byte)(255 * (1 - ageFactor * 2))
+                            );
 
                             var rectangle = new RectangleShape(cellSize)
                             {

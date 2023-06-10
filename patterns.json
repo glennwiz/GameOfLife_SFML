@@ -15,6 +15,132 @@
           [true, true, true, false, false],
           [false, false, false, false, false]
         ]
-      },      
+      },
+      {
+        "name": "beacon",
+        "pattern": [
+          [true, true, false, false],
+          [true, true, false, false],
+          [false, false, true, true],
+          [false, false, true, true]
+        ]
+      },
+      {
+        "name": "pulsar",
+        "pattern": [
+          [false, false, true, true, true, false, false, false, true, true, true, false, false],
+          [false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [true, false, false, false, false, true, false, true, false, false, false, false, true],
+          [true, false, false, false, false, true, false, true, false, false, false, false, true],
+          [true, false, false, false, false, true, false, true, false, false, false, false, true],
+          [false, false, true, true, true, false, false, false, true, true, true, false, false],
+          [false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [false, false, true, true, true, false, false, false, true, true, true, false, false],
+          [true, false, false, false, false, true, false, true, false, false, false, false, true],
+          [true, false, false, false, false, true, false, true, false, false, false, false, true],
+          [true, false, false, false, false, true, false, true, false, false, false, false, true],
+          [false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [false, false, true, true, true, false, false, false, true, true, true, false, false]
+        ]
+      },
+      {
+        "name": "block",
+        "pattern": [
+          [true, true],
+          [true, true]
+        ]
+      },
+      {
+        "name": "loaf",
+        "pattern": [
+          [false, true, true, false],
+          [true, false, false, true],
+          [false, true, false, true],
+          [false, false, true, false]
+        ]
+      },
+      {
+        "name": "boat",
+        "pattern": [
+          [true, true, false],
+          [true, false, true],
+          [false, true, false]
+        ]
+      },
+      {
+        "name": "blinker",
+        "pattern": [
+          [false, true, false],
+          [false, true, false],
+          [false, true, false]
+        ]
+      },
+      {
+        "name": "R-pentomino",
+        "pattern": [
+          [false, true, true],
+          [true, true, false],
+          [false, true, false]
+        ]
+      },
+      {
+        "name": "Diehard",
+        "pattern": [
+          [false, false, false, false, false, false, true, false],
+          [true, true, false, false, false, false, false, false],
+          [false, true, false, false, false, true, true, true]
+        ]
+      },
+      {
+        "name": "Acorn",
+        "pattern": [
+          [false, true, false, false, false, false, false],
+          [false, false, false, true, false, false, false],
+          [true, true, false, false, true, true, true]
+        ]
+      },
+      {
+        "name": "LWSS",
+        "pattern": [
+          [false, true, true, true, true],
+          [true, false, false, false, true],
+          [false, false, false, false, true],
+          [true, false, false, true, false]
+        ]
+      },
+      {
+        "name": "MWSS",
+        "pattern": [
+          [false, false, true, true, true, true],
+          [true, false, false, false, false, true],
+          [false, false, false, false, false, true],
+          [true, false, false, false, true, false],
+          [false, true, false, false, false, false]
+        ]
+      },
+      {
+        "name": "HWSS",
+        "pattern": [
+          [false, false, true, true, true, true, true],
+          [true, false, false, false, false, false, true],
+          [false, false, false, false, false, false, true],
+          [true, false, false, false, false, true, false],
+          [false, true, false, false, false, false, false]
+        ]
+      },
+      {
+        "name": "Gosper glider gun",
+        "pattern": [
+          [false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, true, true],
+          [false, false, false, false, true, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, true, true],
+          [false, false, false, false, false, false, false, false, false, false, true, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false, true, false, false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [true, true, false, false, false, false, false, false, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+        ]
+      }
     ]
   }

@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
@@ -44,14 +45,25 @@ public class GameOfLife
 
     public void InitializePattern(bool[,] pattern, int offsetX, int offsetY)
     {
-        for (int x = 0; x < pattern.GetLength(0); x++)
+        Console.WriteLine($"Initializing pattern at ({offsetX}, {offsetY})");
+        for (int y = 0; y < pattern.GetLength(0); y++)
         {
-            for (int y = 0; y < pattern.GetLength(1); y++)
+            for (int x = 0; x < pattern.GetLength(1); x++)
             {
-                Grid[x + offsetX, y + offsetY] = new Cell { IsAlive = pattern[x, y], Age = 0 };
+                int finalX = x + offsetX;
+                int finalY = y + offsetY;
+                if(finalX >= Width || finalY >= Height)
+                {
+                    Console.WriteLine($"Skipping position ({finalX}, {finalY}) - out of bounds");
+                    continue;
+                }
+
+                Console.WriteLine($"Setting position ({finalX}, {finalY}) to {pattern[y, x]}");
+                Grid[finalX, finalY] = new Cell { IsAlive = pattern[y, x] };
             }
         }
-    }   
+    }
+ 
 
     public void Update()
     {
