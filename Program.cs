@@ -2,6 +2,7 @@
 using SFML.Graphics;
 using SFML.Window;
 using SFML.System;
+using System.Collections.Generic;
 
 public class Program
 {
@@ -9,12 +10,16 @@ public class Program
     private static Time timePerFrame = Time.FromSeconds(0.5f);
     private static Font font;
     private static Text instructionText;
-
+   
     static void Main(string[] args)
     {
         // Create a new SFML window
         var mode = new VideoMode(800, 800);
         var window = new RenderWindow(mode, "Game of Life");
+
+        var patterns = GameOfLife.LoadPatternsFromJson(); // Assume you have this function
+        var startPattern = GetStartPattern(patterns.Patterns);
+        Console.WriteLine("startPattern: " + startPattern);
 
         // Handle the close events
         window.Closed += (s, e) => window.Close();
@@ -31,7 +36,7 @@ public class Program
         };
 
         // Initialize the game
-        var game = new GameOfLife(100, 100);
+        var game = new GameOfLife(100, 100, startPattern);
         Console.WriteLine($"game.Width: {game.Width}, game.Height: {game.Height}, width: {mode.Width }, height: {mode.Height}");
         cellSize = new Vector2f(mode.Width / game.Width, mode.Height / game.Height);
 
@@ -86,6 +91,25 @@ public class Program
             }
         }
     }
+
+    private static bool[,] GetStartPattern(List<CellPattern> patterns)
+    {
+        Console.WriteLine("Select a pattern to start with:");
+        for (int i = 0; i < patterns.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {patterns[i].Name}");
+        }
+
+        int choice;
+        while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > patterns.Count)
+            {
+            Console.WriteLine("Invalid choice. Please enter a number corresponding to a pattern:");
+        } 
+
+        var selectedPattern = patterns[choice - 1];
+        return selectedPattern.Pattern;
+    }    
+
 
     private static void HandleKeyPress(object sender, KeyEventArgs e)
     {

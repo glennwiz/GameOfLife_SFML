@@ -1,14 +1,21 @@
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+
 public class GameOfLife
 {
     public Cell[,] Grid { get; private set; }
     public int Width { get; private set; }
     public int Height { get; private set; }
 
-    public GameOfLife(int width, int height)
+    public GameOfLife(int width, int height, bool[,] startPattern = null)
     {
-         Grid = new Cell[width, height];
-         this.Width = width;
-         this.Height = height;
+        PatternList patterns;
+        patterns = LoadPatternsFromJson();
+
+        Grid = new Cell[width, height];
+        this.Width = width;
+        this.Height = height;
         // Initialize all cells as dead cells
         for (int y = 0; y < height; y++)
         {
@@ -17,14 +24,22 @@ public class GameOfLife
                 Grid[x, y] = new Cell { IsAlive = false, Age = 0 };
             }
         }
-        
-        bool[,] gliderPattern = new bool[,]
+
+        InitializePattern(startPattern, width / 2 - 1, height / 2 - 1);
+    }
+
+    public static PatternList LoadPatternsFromJson()
+    {
+        PatternList patterns;
+        using (StreamReader r = new StreamReader("patterns.json"))
         {
-            { false, true, false },
-            { false, false, true },
-            { true, true, true }
-        };
-        InitializePattern(gliderPattern, width / 2 - 1, height / 2 - 1);
+            string json = r.ReadToEnd();
+            patterns = JsonConvert.DeserializeObject<PatternList>(json);
+        }
+
+        //return List<CellPattern> patterns;
+        return patterns;
+
     }
 
     public void InitializePattern(bool[,] pattern, int offsetX, int offsetY)

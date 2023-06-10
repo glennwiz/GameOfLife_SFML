@@ -8,6 +8,7 @@
     <RestoreFallbackFolders>clear</RestoreFallbackFolders>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="SFML.Net" Version="2.5.0" />
     <PackageReference Include="Spectre.Console" Version="0.47.0" />
   </ItemGroup>
